@@ -1,0 +1,65 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+		springDependencyManagementVersion = '1.0.3.RELEASE'
+	}
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+		classpath "io.spring.gradle:dependency-management-plugin:${springDependencyManagementVersion}"
+	}
+}
+
+apply plugin: 'groovy'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'org.springframework.boot'
+
+class ProjectVersion {
+    Integer major
+    Integer minor
+    Integer patch
+    String  branch
+
+    ProjectVersion( Integer major, Integer minor, Integer patch, String branch ) {
+        this.major = major
+        this.minor = minor
+        this.patch = patch
+        this.branch = branch
+    }
+
+    @Override
+    String toString() {
+        String release = '-SNAPSHOT'
+        if ( branch == 'master' ) {
+            release = 'RELEASE'
+        }
+        else if ( branch == 'development' ) {
+            release = 'MILESTONE'
+        }
+        "${major}.${minor}.${patch}.${release}"
+    }
+}
+
+version = new ProjectVersion( major.toInteger(), minor.toInteger(), patch.toInteger(), branch.toString() )
+
+sourceCompatibility = 1.8
+
+repositories {
+	jcenter()
+}
+
+defaultTasks = ['clean', 'build']
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.codehaus.groovy:groovy')
+}
+
+dependencyManagement {
+	imports {
+	    mavenBom 'io.spring.platform:platform-bom:Brussels-SR5'
+    }
+}
