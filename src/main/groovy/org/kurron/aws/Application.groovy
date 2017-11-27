@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
-class EchoApplication {
+class Application {
 
 	static void main(String[] args) {
-		SpringApplication.run EchoApplication, args
+		SpringApplication.run Application, args
 	}
 
 	@Bean
