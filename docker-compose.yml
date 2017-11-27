@@ -1,9 +1,9 @@
-version: '2'
+version: '3.2'
 services:
-    echo:
+    showcase:
         build: .
         ports:
         - "8080"
         environment:
-            server_context-path: /echo
+            server_context-path: /
             management_context-path: /operations
